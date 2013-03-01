@@ -1,4 +1,4 @@
 GroupHomework
 =============
 
-Homework done with Luis Gutierrez
+Luis Gutierrez & Christian Poveda Homework for Computational Physics Course at Uniandes
