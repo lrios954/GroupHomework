@@ -1,6 +1,8 @@
 import os
 import numpy
 import sys
+import pylab
+
 table = []
 
 for filename in os.listdir('hw4_data/' ):
@@ -34,10 +36,17 @@ for filename in os.listdir('hw4_data/' ):
 	table.append((float(name[1]),float(name[3]))+tuple(x_reg)+tuple(y_reg))
 	
 # print ('\n'.join('%f %f %f %f %f %f %f' % x for x in table))
-
+gravity = []
+theta = []
 for line in table:
 
 	print (line)
 	print '\n'
+	theta.append(line[1])
+	gravity.append(2.0 * line[4])
 
-		
+pylab.plot(theta, gravity, '+')
+pylab.xlabel('angle (degrees)')
+pylab.ylabel('gravity (m/s)')
+pylab.grid(True)
+pylab.show()
