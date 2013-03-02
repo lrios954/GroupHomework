@@ -22,7 +22,7 @@ for filename in os.listdir('hw4_data/' ):
 	# lee el archivo
 	info0 = open(path, 'r').readlines()
 	
-	# le da el formato correcto a la información dentro del archivo
+	# le da el formato correcto a la informacion dentro del archivo
 	for line in info0:
 
 		info.append(line.split())
@@ -39,11 +39,11 @@ for filename in os.listdir('hw4_data/' ):
 	x_reg = numpy.polyfit(numpy.array(t_data), numpy.array(x_data), 1.0)
 	y_reg = numpy.polyfit(numpy.array(t_data), numpy.array(y_data), 2.0)
 
-	# agrega a la lista una tupla con la información del archivo
+	# agrega a la lista una tupla con la informacion del archivo
 	table.append((float(name[1]),float(name[3]))+tuple(x_reg)+tuple(y_reg))
-	# el formato es: [ID, angulo, velocidad inicial en x, posición inicial en x, aceleración dividida en dos, velocidad inicial en y, posición inicial en y]
+	# el formato es: [ID, angulo, v_0_x, x_0, g/2, v_0_y, y_0]
 
-# imprime la lista con la información de los experimentos
+# imprime la lista con la informacion de los experimentos
 for line in table:
 
 	print (line)
@@ -51,7 +51,7 @@ for line in table:
 	theta.append(line[1])
 	gravity.append(2.0 * line[4])
 
-# grafica aceleración vs angulo y lo guarda en el archivo 'gravityplot.png' 
+# grafica aceleracion vs angulo y lo guarda en el archivo 'gravityplot.png' 
 pylab.plot(theta, gravity, '+')
 pylab.xlabel('angle (degrees)')
 pylab.ylabel('gravity (m/s)')
