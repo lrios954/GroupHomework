@@ -1,3 +1,4 @@
+
 import os
 import numpy
 import sys
@@ -40,21 +41,20 @@ for filename in os.listdir('hw4_data/' ):
 	y_reg = numpy.polyfit(numpy.array(t_data), numpy.array(y_data), 2.0)
 
 	# agrega a la lista una tupla con la informacion del archivo
-	table.append((float(name[1]),float(name[3]))+tuple(x_reg)+tuple(y_reg))
-	# el formato es: [ID, angulo, v_0_x, x_0, g/2, v_0_y, y_0]
+	table.append((float(name[1]),float(name[3]),float(x_reg[0]),float(y_reg[1]),(2.0*float(y_reg[0]))))
+	# el formato es: [ID, angulo, v_0_x, v_0_y, g]
 
 # imprime la lista con la informacion de los experimentos
 for line in table:
-
-	print (line)
-	print '\n'
+	
+	print line
 	theta.append(line[1])
-	gravity.append(2.0 * line[4])
+	gravity.append(line[4])
 
 # grafica aceleracion vs angulo y lo guarda en el archivo 'gravityplot.png' 
 pylab.plot(theta, gravity, '+')
 pylab.xlabel('angle (degrees)')
-pylab.ylabel('gravity (m/s)')
+pylab.ylabel('acceleration (m/s)')
 pylab.title('Acceleration vs Angle')
 pylab.savefig('gravityplot')
 pylab.grid(True)
