@@ -6,8 +6,13 @@ Por el momento el programa es capaz de entrar a la carpeta e imprimir una lista 
 Version 2
 =============
 
-es capaz de abrir todos los archivos, hacer minimos cuadrados para posicion en los 2 ejes y construir una tabla con el formato:[ ID , angulo, velocidad inicial x, velocidad inicial y, aceleracion ] 
+Es capaz de abrir todos los archivos, hacer minimos cuadrados para posicion en los 2 ejes y construir una tabla con el formato:[ ID , angulo, velocidad inicial x, velocidad inicial y, aceleracion ] 
 
 	Version 2.1
 	
 	Grafica la gravedad en funcion del angulo usando pylab
+
+Version 3
+=============
+
+El programa calcula gravedades medias, exporta archivos y los grafica
