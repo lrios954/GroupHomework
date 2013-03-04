@@ -11,7 +11,7 @@ theta = []
 var_gravity = []
 avg_grav = []
 pca = []
-data = open('data.dat', 'a')
+data = open('data.dat', 'w')
 
 # corre un loop en el directorio hw4_data
 for filename in os.listdir('hw4_data/' ):
@@ -33,7 +33,7 @@ for filename in os.listdir('hw4_data/' ):
 
 		info.append(line.split())
 			
-	info.pop(0)
+	info.remove(['#','time','pos_x','pos_y'])
 	info.remove(['#', '[second]', '[meter]', '[meter]'])
 	for line in info:
 		
@@ -55,6 +55,7 @@ table.sort(key=lambda tup: tup[1])
 
 # imprime la lista con la informacion de los experimentos
 data.write('\n'.join('%f %f %f %f %f' % x for x in table))
+
 
 print 'information exported sucessfully in data.dat'
 
@@ -82,9 +83,9 @@ covariance_matrix=numpy.cov(data)
 
 w,u = eigh(covariance_matrix, overwrite_a = True)
 
-#Imprime los valores y vectores propios en orden descendente de valores propios en el archivo results_pca.dat
+#Imprime los valores y vectores propios en orden descendente de valores propios en el archivo pca.dat
 
-out_name='results_pca.dat'
+out_name='pca.dat'
 out=open(out_name,'w')
 out.write('Eigenvalues:')
 out.write('\n')
@@ -95,7 +96,7 @@ out.write('\n')
 out.write(''.join('%s' % u[:,::-1]))
 out.close()
 
-print 'PCA results exported sucessfully in results_pca.dat'
+print 'PCA results exported sucessfully in pca.dat'
 
 angles = list(set(theta))
 
