@@ -2,11 +2,15 @@ import os
 import numpy
 import sys
 import pylab
+import scipy
+from scipy.optimize import curve_fit
+from scipy.linalg import eigh
 
 table = []
 theta = []
 var_gravity = []
 avg_grav = []
+pca = []
 data = open('data.dat', 'a')
 
 # corre un loop en el directorio hw4_data
@@ -57,6 +61,42 @@ print 'information exported sucessfully in data.dat'
 for line in table:
 
 	theta.append(line[1])
+	pca.append(repr(line[2])+' '+repr(line[3])+' '+repr(line[4]))
+
+
+n_dimensions=3
+n_measurements=len(pca)
+
+data=numpy.empty((n_dimensions,n_measurements,))
+
+for i in range(n_measurements):
+
+    datosLinea=pca[i].split()
+
+    for j in range(n_dimensions):
+        
+        datosLinea[j]=float(datosLinea[j])
+        data.itemset((j,i),datosLinea[j])
+
+covariance_matrix=numpy.cov(data)
+
+w,u = eigh(covariance_matrix, overwrite_a = True)
+
+#Imprime los valores y vectores propios en orden descendente de valores propios en el archivo results_pca.dat
+
+out_name='results_pca.dat'
+out=open(out_name,'w')
+out.write('Eigenvalues:')
+out.write('\n')
+out.write(''.join('%s' % w[::-1]))
+out.write('\n')
+out.write('Eigenvectors:')
+out.write('\n')
+out.write(''.join('%s' % u[:,::-1]))
+out.close()
+
+print 'PCA results exported sucessfully in results_pca.dat'
+
 angles = list(set(theta))
 
 # calcula la gravedad media para cada angulo
@@ -80,19 +120,38 @@ pylab.ylabel('average gravity (m/s)')
 pylab.title('Average gravity vs Angle')
 pylab.savefig('gravityplot')
 pylab.grid(True)
+
 pylab.show()
+
+print 'gravityplot.png written sucessfully'
+
 
 # calcula variaciones de la gravedad
 for i in range(len(avg_grav)):
 
 	var_gravity.append(1-(avg_grav[i]/(9.81)))
-	
-# grafica variacion gravitacional vs angulo y lo guarda en el archivo 'variationplot.png' 
+
+# hace un fit de los datos
+def f(x, a, b):
+     return a*numpy.sin(numpy.deg2rad(x)) + b
+
+parameters = (scipy.optimize.curve_fit(f, numpy.array(angles), numpy.array(var_gravity)))[0]
+
+pylab.plot(angles, f(angles,parameters[0],parameters[1]), '.')
 pylab.plot(angles, var_gravity, '.')
 pylab.xlabel('angle (degrees)')
-pylab.ylabel('gravitational variation')
-pylab.title('Variation vs Angle')
-pylab.savefig('variation plot')
+pylab.ylabel('gravitational variation (dimensionless)')
+pylab.title('Gravitational Variation vs angle')
 pylab.grid(True)
 pylab.show()
 
+# grafica residuo vs angulo y lo guarda en el archivo 'residueplot.png' 
+pylab.plot(angles, f(angles,parameters[0],parameters[1])-var_gravity, '.')
+pylab.xlabel('angle (degrees)')
+pylab.ylabel('residue (dimensionless)')
+pylab.title('Residue vs angle')
+pylab.savefig('residueplot')
+pylab.grid(True)
+pylab.show()
+
+print 'residueplot.png written sucessfully'
