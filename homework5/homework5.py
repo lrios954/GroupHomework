@@ -89,10 +89,20 @@ pylab.savefig('new_sunspots')
 pylab.grid(True)
 pylab.show()
 		
+#Halla el siguiente maximo solar
 
+#En la grafica de power_between_1_and_20 hay un pico en un periodo de 10.89 anios, correspondiendo al periodo del ciclo solar. En la grafica new_suspots vemos que el ultimo maximo ocurrio en 1985.33 
 
+periodo=10.89
+anio=1985.33
+actual=2013.5
+end=False
+while (end==False):
+	anio+=periodo
+	if (anio>=actual):
+		end=True
 
-
-
+print "El proximo maximo solar ocurrira en el anio:"
+print anio
 
 
