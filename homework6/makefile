@@ -1,8 +1,11 @@
-a.out: main.o derivative.o runge-kutta.o
-	cc -lm main.o derivative.o runge-kutta.o
+a.out: main.o dsolve.o derivative.o runge-kutta.o
+	cc -lm main.o dsolve.o derivative.o runge-kutta.o
 
 main.o: main.c
 	cc -c main.c
+
+dsolve.o: dsolve.c
+	cc -c dsolve.c
 
 derivative.o: derivative.c
 	cc -c derivative.c
